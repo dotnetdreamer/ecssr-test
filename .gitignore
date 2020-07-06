@@ -1,0 +1,15 @@
+*.dll
+!Presentation/Nop.Web/Plugins/SevenSpikes.*/*.dll
+bin
+obj
+packages
+Presentation/Nop.Web/Content/Images/Thumbs/*.jpeg
+Presentation/Nop.Web/Content/Images/Thumbs/*.png
+Presentation/Nop.Web/Content/Images/Thumbs/*.jpg
+Presentation/Nop.Web/Content/Images/Thumbs/*.gif
+Presentation/Nop.Web/Plugins/*
+!Presentation/Nop.Web/Plugins/SevenSpikes.*
+.vs/
+*.suo
+*.user
+_ReSharper.*
