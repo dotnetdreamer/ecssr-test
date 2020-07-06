@@ -23,7 +23,6 @@ namespace Ecssr.Api.Controllers
         {
             _productService = productService;
             _elasticClient = elasticClient;
-            //_logger = logger;
         }
 
         [HttpGet("get")]
@@ -36,18 +35,12 @@ namespace Ecssr.Api.Controllers
         public async Task<IActionResult> Find(string query, int page = 1, int pageSize = 5)
         {
             var response = await _elasticClient.SearchAsync<Product>(
-                 s => s.Query(q => q.QueryString(d => d.Query('*' + query + '*')))
+                 s => s.Query(q => q.QueryString(d => d.Query($"*{query}*")))
                      .From((page - 1) * pageSize)
                      .Size(pageSize));
 
             if (!response.IsValid)
-            {
-                // We could handle errors here by checking response.OriginalException 
-                //or response.ServerError properties
-                //_logger.LogError("Failed to search documents");
-
                 return Ok(new Product[] { });
-            }
 
             return Ok(response.Documents);
         }
