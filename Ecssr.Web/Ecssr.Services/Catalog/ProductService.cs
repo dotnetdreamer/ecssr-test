@@ -11,8 +11,6 @@ namespace Ecssr.Services.Catalog
 {
     public class ProductService : IProductService
     {
-        private List<Product> _cache = new List<Product>();
-
         private readonly EcssrDbContext _ecssrDbContext;
         private readonly IElasticClient _elasticClient;
 
@@ -33,66 +31,50 @@ namespace Ecssr.Services.Catalog
             return products;
         }
 
-        public virtual Task<Product> GetProductById(int id)
+        public async Task<Product> GetProductById(int id)
         {
-            var product = _cache
-              .FirstOrDefault(p => p.Id == id);
+            var product = await _ecssrDbContext.Products
+              .FirstOrDefaultAsync(p => p.Id == id);
 
-            return Task.FromResult(product);
-        }
-
-        public virtual Task<IEnumerable<Product>> GetProductsByCategory(string category)
-        {
-            var products = _cache
-              .Where(p => p.Category.Contains(category, StringComparison.CurrentCultureIgnoreCase));
-
-            return Task.FromResult(products);
+            return product;
         }
 
         public async Task DeleteAsync(Product product)
         {
             await _elasticClient.DeleteAsync<Product>(product);
 
-            if (_cache.Contains(product))
+            var toRemove = await this.GetProductById(product.Id);
+            if (toRemove != null)
             {
-                _cache.Remove(product);
+                _ecssrDbContext.Remove(toRemove);
+                await _ecssrDbContext.SaveChangesAsync();
             }
+
         }
 
-        public async Task SaveSingleAsync(Product product)
+        public async Task AddAsync(Product product)
         {
-            if (_cache.Any(p => p.Id == product.Id))
+            var toAddOrUpdate = await this.GetProductById(product.Id);
+            if (toAddOrUpdate != null)
             {
                 await _elasticClient.UpdateAsync<Product>(product, u => u.Doc(product));
+                _ecssrDbContext.Update(toAddOrUpdate);
             }
             else
             {
-                _cache.Add(product);
+                _ecssrDbContext.Add(toAddOrUpdate);
                 await _elasticClient.IndexDocumentAsync<Product>(product);
             }
+
+            await _ecssrDbContext.SaveChangesAsync();
         }
 
-        public async Task SaveManyAsync(Product[] products)
+        public async Task AddManyAsync(Product[] products)
         {
-            _cache.AddRange(products);
+            _ecssrDbContext.AddRange(products);
+            await _ecssrDbContext.SaveChangesAsync();
 
             var result = await _elasticClient.IndexManyAsync(products);
-            if (result.Errors)
-            {
-                // the response can be inspected for errors
-                foreach (var itemWithError in result.ItemsWithErrors)
-                {
-                    var msg = $"Failed to index document {itemWithError.Id}: {itemWithError.Error}";
-                    throw new Exception(msg);
-                }
-            }
-        }
-
-        public async Task SaveBulkAsync(Product[] products)
-        {
-            _cache.AddRange(products);
-
-            var result = await _elasticClient.BulkAsync(b => b.Index("products").IndexMany(products));
             if (result.Errors)
             {
                 // the response can be inspected for errors

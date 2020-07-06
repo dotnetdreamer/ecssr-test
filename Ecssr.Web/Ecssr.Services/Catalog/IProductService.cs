@@ -9,9 +9,7 @@ namespace Ecssr.Services.Catalog
         Task DeleteAsync(Product product);
         Task<Product> GetProductById(int id);
         Task<IEnumerable<Product>> GetProductList(int pageIndex = 1, int skip = 0);
-        Task<IEnumerable<Product>> GetProductsByCategory(string category);
-        Task SaveBulkAsync(Product[] products);
-        Task SaveManyAsync(Product[] products);
-        Task SaveSingleAsync(Product product);
+        Task AddManyAsync(Product[] products);
+        Task AddAsync(Product product);
     }
 }

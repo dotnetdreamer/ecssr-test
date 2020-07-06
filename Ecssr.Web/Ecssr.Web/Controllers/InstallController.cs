@@ -51,6 +51,8 @@ namespace Ecssr.Web.Controllers
             var products = await _ecssrDbContext.Products.CountAsync();
             if (products == 0)
             {
+                var productsToAdd = new List<Product>();
+
                 //seed data
                 const int RECORDS_TO_INSERT = 10;
                 for (int i = 0; i < RECORDS_TO_INSERT; i++)
@@ -70,10 +72,10 @@ namespace Ecssr.Web.Controllers
                     var product = _mapper.Map<Product>(model);
                     product.CreatedOn = DateTime.UtcNow.AddMinutes(i);
 
-                    _ecssrDbContext.Products.Add(product);
+                    productsToAdd.Add(product);
                 }
 
-                await _ecssrDbContext.SaveChangesAsync();
+                await this._productService.AddManyAsync(productsToAdd.ToArray());
             }
 
             return RedirectToAction(nameof(Index));
