@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Ecssr.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Ecssr.Web.Mappings;
 
 namespace Ecssr.Web
 {
@@ -29,6 +27,9 @@ namespace Ecssr.Web
             var connection = Configuration.GetSection("ConnectionString")
                 .GetSection("DbConnection").Value;
             services.AddDbContext<EcssrDbContext>(options => options.UseSqlServer(connection));
+
+            //automapper
+            services.AddAutoMapper(typeof(Startup).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,7 +41,7 @@ namespace Ecssr.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Install/Error");
             }
             app.UseStaticFiles();
 
@@ -52,7 +53,7 @@ namespace Ecssr.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Install}/{action=Index}/{id?}");
             });
 
             //setup db

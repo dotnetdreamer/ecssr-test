@@ -10,6 +10,9 @@ namespace Ecssr.Data
     {
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<ProductPicture> ProductPictures { get; set; }
+
+
         public EcssrDbContext(DbContextOptions<EcssrDbContext> options)
             : base(options)
         {
