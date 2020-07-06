@@ -36,12 +36,25 @@ namespace Ecssr.Web.Controllers
                 const int RECORDS_TO_INSERT = 10;
                 for (int i = 0; i < RECORDS_TO_INSERT; i++)
                 {
-                    var model = new ProductViewModel();
+                    var model = new ProductViewModel
+                    {
+                        Name = $"Product - {i}",
+                        Category = $"Category 1",
+                        CompanyName = $"Company 1",
+                        Color = "Red",
+                        Description = "Description goes here for product {i]",
+                        Model = "Model Name",
+                        Price = i,
+                        VideoUrl = "",
+                    };
 
                     var product = _mapper.Map<Product>(model);
-                    
+                    product.CreatedOn = DateTime.UtcNow.AddMinutes(i);
+
+                    _ecssrDbContext.Products.Add(product);
                 }
 
+                await _ecssrDbContext.SaveChangesAsync();
             }
 
             return View();
