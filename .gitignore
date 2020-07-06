@@ -1,7 +1,7 @@
 *.dll
-bin
-obj
+obj/
 packages
 .vs/
 *.suo
 *.user
+bin/
