@@ -12,8 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Ecssr.Core\Ecssr.Core.csproj" />
-    <ProjectReference Include="..\..\Ecssr.Data\Ecssr.Data.csproj" />
     <ProjectReference Include="..\Ecssr.Services\Ecssr.Services.csproj" />
   </ItemGroup>
 

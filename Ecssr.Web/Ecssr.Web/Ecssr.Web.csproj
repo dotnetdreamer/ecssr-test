@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Ecssr.Data\Ecssr.Data.csproj" />
+    <ProjectReference Include="..\Ecssr.Core\Ecssr.Core.csproj" />
     <ProjectReference Include="..\Ecssr.Web.Framework\Ecssr.Web.Framework.csproj" />
   </ItemGroup>
 
