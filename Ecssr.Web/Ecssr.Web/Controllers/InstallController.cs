@@ -81,12 +81,16 @@ namespace Ecssr.Web.Controllers
 
         public async Task<IActionResult> RunIndexer()
         {
-            await _elasticClient.DeleteByQueryAsync<Product>(q => q.MatchAll());
-
-            var products = (await _productService.GetProductList(int.MaxValue)).ToArray();
-            foreach (var product in products)
+            var totalIndexed = await _elasticClient.CountAsync<Product>();
+            if (totalIndexed.Count == 0)
             {
-                await _elasticClient.IndexDocumentAsync(product);
+                await _elasticClient.DeleteByQueryAsync<Product>(q => q.MatchAll());
+
+                var products = (await _productService.GetProductList(int.MaxValue)).ToArray();
+                foreach (var product in products)
+                {
+                    await _elasticClient.IndexDocumentAsync(product);
+                }
             }
 
             return RedirectToAction(nameof(Index));
