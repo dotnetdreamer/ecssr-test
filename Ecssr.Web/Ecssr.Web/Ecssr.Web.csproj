@@ -13,10 +13,12 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="NEST" Version="7.8.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Ecssr.Data\Ecssr.Data.csproj" />
+    <ProjectReference Include="..\Ecssr.Web.Framework\Ecssr.Web.Framework.csproj" />
   </ItemGroup>
 
 </Project>

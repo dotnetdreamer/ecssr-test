@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ecssr.Services.Catalog;
+using Ecssr.Web.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace Ecssr.Api
 {
@@ -25,6 +26,15 @@ namespace Ecssr.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //automapper
+            //services.AddAutoMapper(typeof(Startup).Assembly);
+
+            //services
+            services.AddSingleton<IProductService, ProductService>();
+
+            //elastic search extension
+            services.AddElasticsearch(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -9,9 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ecssr.Services\Ecssr.Services.csproj" />
-    <ProjectReference Include="..\Ecssr.Web.Framework\Ecssr.Web.Framework.csproj" />
+    <ProjectReference Include="..\..\Ecssr.Core\Ecssr.Core.csproj" />
   </ItemGroup>
-
 
 </Project>

@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecssr.Core", "..\Ecssr.Core
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecssr.Api", "Ecssr.Api\Ecssr.Api.csproj", "{5F306F1D-FAA0-4E7F-98D4-EBB13E929087}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecssr.Services", "Ecssr.Services\Ecssr.Services.csproj", "{1A42F528-6FEA-4A13-AC0C-D902A2E68DDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecssr.Web.Framework", "Ecssr.Web.Framework\Ecssr.Web.Framework.csproj", "{C391A29E-DB0C-461F-AC5C-B6316542B4E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{5F306F1D-FAA0-4E7F-98D4-EBB13E929087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F306F1D-FAA0-4E7F-98D4-EBB13E929087}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F306F1D-FAA0-4E7F-98D4-EBB13E929087}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A42F528-6FEA-4A13-AC0C-D902A2E68DDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A42F528-6FEA-4A13-AC0C-D902A2E68DDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A42F528-6FEA-4A13-AC0C-D902A2E68DDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A42F528-6FEA-4A13-AC0C-D902A2E68DDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C391A29E-DB0C-461F-AC5C-B6316542B4E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C391A29E-DB0C-461F-AC5C-B6316542B4E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C391A29E-DB0C-461F-AC5C-B6316542B4E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C391A29E-DB0C-461F-AC5C-B6316542B4E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

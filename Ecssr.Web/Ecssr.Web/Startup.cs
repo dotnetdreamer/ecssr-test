@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Ecssr.Web.Mappings;
+using Ecssr.Web.Extensions;
 
 namespace Ecssr.Web
 {
@@ -30,6 +30,9 @@ namespace Ecssr.Web
 
             //automapper
             services.AddAutoMapper(typeof(Startup).Assembly);
+
+            //elastic search extension
+            services.AddElasticsearch(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
