@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Ecssr.Services.Catalog;
 using Ecssr.Web.Extensions;
+using Ecssr.Web.Framework.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -30,8 +31,7 @@ namespace Ecssr.Api
             //automapper
             //services.AddAutoMapper(typeof(Startup).Assembly);
 
-            //services
-            services.AddSingleton<IProductService, ProductService>();
+            services.AddEcssrDbContextAndServices(Configuration);
 
             //elastic search extension
             services.AddElasticsearch(Configuration);

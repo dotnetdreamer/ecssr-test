@@ -1,4 +1,6 @@
 ﻿using Ecssr.Core.Domain;
+using Ecssr.Data;
+using Microsoft.EntityFrameworkCore;
 using Nest;
 using System;
 using System.Collections.Generic;
@@ -11,19 +13,24 @@ namespace Ecssr.Services.Catalog
     {
         private List<Product> _cache = new List<Product>();
 
+        private readonly EcssrDbContext _ecssrDbContext;
         private readonly IElasticClient _elasticClient;
 
-        public ProductService()
+        public ProductService(IElasticClient elasticClient
+            , EcssrDbContext ecssrDbContext)
         {
+            _elasticClient = elasticClient;
+            _ecssrDbContext = ecssrDbContext;
         }
 
-        public virtual Task<IEnumerable<Product>> GetProductList(int page, int skip = 0)
+        public async Task<IEnumerable<Product>> GetProductList(int pageIndex = 1, int skip = 0)
         {
-            var products = _cache
+            var products = await _ecssrDbContext.Products
                 .Skip(skip)
-                .Take(page);
+                .Take(pageIndex - 1)
+                .ToListAsync();
 
-            return Task.FromResult(products);
+            return products;
         }
 
         public virtual Task<Product> GetProductById(int id)

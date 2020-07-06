@@ -22,7 +22,6 @@ namespace Ecssr.Web.Extensions
             AddDefaultMappings(settings);
 
             var client = new ElasticClient(settings);
-            //services.AddSingleton(client);// register the client as a singleton
             services.Add(ServiceDescriptor.Singleton<IElasticClient>(client));
 
             CreateIndex(client, defaultIndex);
@@ -30,8 +29,9 @@ namespace Ecssr.Web.Extensions
 
         private static void AddDefaultMappings(ConnectionSettings settings)
         {
-            settings.DefaultMappingFor<Product>(m => 
+            settings.DefaultMappingFor<Product>(m =>
                 m.Ignore(p => p.Price)
+                .Ignore(p => p.VideoUrl)
             );
         }
 

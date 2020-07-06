@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Ecssr.Web.Extensions;
+using Ecssr.Web.Framework.Extensions;
 
 namespace Ecssr.Web
 {
@@ -24,9 +25,7 @@ namespace Ecssr.Web
         {
             services.AddControllersWithViews();
 
-            var connection = Configuration.GetSection("ConnectionString")
-                .GetSection("DbConnection").Value;
-            services.AddDbContext<EcssrDbContext>(options => options.UseSqlServer(connection));
+            services.AddEcssrDbContextAndServices(Configuration);
 
             //automapper
             services.AddAutoMapper(typeof(Startup).Assembly);

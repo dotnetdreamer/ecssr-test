@@ -1,8 +1,25 @@
-﻿@{
+﻿@model IEnumerable<dynamic>
+@{
     ViewData["Title"] = "Home Page";
+    var noDbInstalled = ViewBag.DbInstalled == null;
+    long totalIndexed = ViewBag.TotalIndexed;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="text-center">
+
+        @if (noDbInstalled)
+        {
+            <h1>Seed and install Database</h1>
+            <a class="btn btn-primary" href="/install/run">Install</a>
+        }
+        else if (totalIndexed == 0)
+        {
+            <h1>Click here to run Elastic Search Indexer. Please be patient, it might take a while</h1>
+            <a class="btn btn-primary" href="/install/runIndexer">Run Indexer</a>
+        }
+        else
+        {
+            <h1>You are all set now</h1>
+        }
+    </div>
+

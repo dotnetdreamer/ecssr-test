@@ -10,6 +10,8 @@ using Ecssr.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Ecssr.Core.Domain;
+using Nest;
+using Ecssr.Services.Catalog;
 
 namespace Ecssr.Web.Controllers
 {
@@ -18,19 +20,36 @@ namespace Ecssr.Web.Controllers
         private readonly ILogger<InstallController> _logger;
         private readonly EcssrDbContext _ecssrDbContext;
         private readonly IMapper _mapper;
+        private readonly IElasticClient _elasticClient;
+        private readonly IProductService _productService;
 
         public InstallController(ILogger<InstallController> logger
-            , EcssrDbContext ecssrDbContext, IMapper mapper)
+            , EcssrDbContext ecssrDbContext, IMapper mapper
+            , IElasticClient elasticClient, IProductService productService)
         {
             _logger = logger;
             _ecssrDbContext = ecssrDbContext;
             _mapper = mapper;
+            _elasticClient = elasticClient;
+            _productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
             var products = await _ecssrDbContext.Products.CountAsync();
-            if(products == 0)
+            if (products > 0)
+                ViewBag.DbInstalled = true;
+
+            var totalIndexed = await _elasticClient.CountAsync<Product>();
+            ViewBag.TotalIndexed = totalIndexed.Count;
+
+            return View();
+        }
+
+        public async Task<IActionResult> Run()
+        {
+            var products = await _ecssrDbContext.Products.CountAsync();
+            if (products == 0)
             {
                 //seed data
                 const int RECORDS_TO_INSERT = 10;
@@ -57,12 +76,20 @@ namespace Ecssr.Web.Controllers
                 await _ecssrDbContext.SaveChangesAsync();
             }
 
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> RunIndexer()
         {
-            return View();
+            await _elasticClient.DeleteByQueryAsync<Product>(q => q.MatchAll());
+
+            var products = (await _productService.GetProductList(int.MaxValue)).ToArray();
+            foreach (var product in products)
+            {
+                await _elasticClient.IndexDocumentAsync(product);
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

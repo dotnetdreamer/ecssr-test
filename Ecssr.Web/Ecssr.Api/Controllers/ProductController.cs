@@ -44,7 +44,7 @@ namespace Ecssr.Api.Controllers
             {
                 // We could handle errors here by checking response.OriginalException 
                 //or response.ServerError properties
-                _logger.LogError("Failed to search documents");
+                //_logger.LogError("Failed to search documents");
 
                 return Ok(new Product[] { });
             }
@@ -52,18 +52,5 @@ namespace Ecssr.Api.Controllers
             return Ok(response.Documents);
         }
 
-        [HttpGet("reindex")]
-        public async Task<IActionResult> ReIndex()
-        {
-            await _elasticClient.DeleteByQueryAsync<Product>(q => q.MatchAll());
-
-            var products = (await _productService.GetProductList(int.MaxValue)).ToArray();
-            foreach (var product in products)
-            {
-                await _elasticClient.IndexDocumentAsync(product);
-            }
-
-            return Ok($"{products.Length} product(s) reindexed");
-        }
     }
 }
