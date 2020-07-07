@@ -16,6 +16,7 @@
 
 ## Setup
 - (Download)[https://www.telerik.com/account/product-download?product=REPORTING] Telerik Reporting and install trial version 
-- (Download)[https://www.elastic.co/downloads/elasticsearch] Elastic Search and run elasticsearch.bat file
+- (Download)[https://www.elastic.co/downloads/elasticsearch] Elastic Search and run elasticsearch.bat file. Make sure Elastic search server is running by visiting to http://localhost:9200/ in your browser
+
 
 
