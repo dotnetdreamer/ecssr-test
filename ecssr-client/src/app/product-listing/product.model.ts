@@ -8,3 +8,9 @@ export interface IProductPicture {
     id: number;
     imageUrl: string;
 }
+
+export interface IReport {
+    totalIndexed: number;
+    totalProducts: number;
+    totalPictures: number;
+}

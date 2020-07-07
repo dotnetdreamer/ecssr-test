@@ -21,12 +21,14 @@ export class BaseService {
 
                 for(let prop in args.body) {
                     if(args.body.hasOwnProperty(prop)) {
-                        if(newUrl.includes('?')) {
-                            newUrl += '&';
-                        } else {
-                            newUrl += '?';
+                        if(args.body[prop] != null) {
+                            if(newUrl.includes('?')) {
+                                newUrl += '&';
+                            } else {
+                                newUrl += '?';
+                            }
+                            newUrl += `${prop}=${args.body[prop]}`;
                         }
-                        newUrl += `${prop}=${args.body[prop]}`;
                     }
                 }   
                 args.url = newUrl;

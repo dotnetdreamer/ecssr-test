@@ -31,10 +31,10 @@ namespace Ecssr.Services.Catalog
                 .Include(p => p.ProductPictures);
 
             if (!string.IsNullOrEmpty(term))
-                query = query.Where(p => p.Name.Contains(term, StringComparison.OrdinalIgnoreCase));
+                query = query.Where(p => p.Name.Contains(term));
 
             if (!string.IsNullOrEmpty(color))
-                query = query.Where(p => p.Color.Contains(color, StringComparison.OrdinalIgnoreCase));
+                query = query.Where(p => p.Color.Contains(color));
 
             if (priceFrom != null)
                 query = query.Where(p => p.Price >= priceFrom);
@@ -60,6 +60,12 @@ namespace Ecssr.Services.Catalog
               .FirstOrDefaultAsync(p => p.Id == id);
 
             return product;
+        }
+
+        public async Task<int> GetProductPicturesCount()
+        {
+            var pictures = await _ecssrDbContext.ProductPictures.CountAsync();
+            return pictures;
         }
 
         public async Task DeleteAsync(Product product)

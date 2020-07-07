@@ -41,18 +41,25 @@ namespace Ecssr.Api.Controllers
         {
             var totalIndexed = await _elasticClient.CountAsync<Product>();
             var totalProducts = _productService.GetProductList(pageIndex: 0, pageSize: 1).TotalCount;
+            var totalPictures = await _productService.GetProductPicturesCount();
 
-            return Ok(new
+            var result = new
             {
-                totalIndexed,
-                totalProducts
-            });
+                totalIndexed = totalIndexed.Count,
+                totalProducts = totalProducts,
+                totalPictures = totalPictures
+            };
+            return Ok(result);
         }
 
         [HttpGet("getProductList")]
-        public IActionResult GetProductList(int pageIndex = 0, int pageSize = 5)
+        public IActionResult GetProductList(string term = ""
+            , string color = "", DateTime? fromDate = null, DateTime? toDate = null
+            , decimal? priceFrom = null, decimal? priceTo = null
+            , int pageIndex = 0, int pageSize = 5)
         {
             var products = _productService.GetProductList(
+                term: term,
                 pageIndex: pageIndex, pageSize: pageSize);
 
             var model = new DataSourceResult

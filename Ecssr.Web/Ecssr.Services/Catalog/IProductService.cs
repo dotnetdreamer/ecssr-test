@@ -16,6 +16,8 @@ namespace Ecssr.Services.Catalog
             , decimal? priceFrom = null, decimal? priceTo = null
             , int pageIndex = 0, int pageSize = int.MaxValue);
 
+        Task<int> GetProductPicturesCount();
+
         Task AddManyAsync(Product[] products);
         Task AddAsync(Product product);
     }

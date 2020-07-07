@@ -5,6 +5,16 @@
   .mat-card {
     margin: 20px 0;
   }
+
+  .container-report {
+    display: flex;
+    justify-content: space-between;
+
+    .mat-card-header {
+      display: flex;
+      justify-content: center;
+    }
+  }
 }
 
 .form {

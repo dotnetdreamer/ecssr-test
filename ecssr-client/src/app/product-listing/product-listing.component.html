@@ -20,41 +20,93 @@
 </mat-card> -->
 
 <div class="container">
-  <mat-card class="card">
-    <form class="form" [formGroup]="searchForm">
+  <div class="container-report">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Total Indexes</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div #indexesContainer></div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Total Products</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div #productsContainer></div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Total Pictures</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div #picturesContainer></div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <form class="form" [formGroup]="searchForm" (ngSubmit)="onSearched()">
+    <mat-card class="card">
       <table class="full-width" cellspacing="0">
         <tr>
-        <mat-form-field class="full-width">
-          <input type="text" placeholder="Start typing at least 2 characters..." matInput 
-          [formControl]="termControl" [matAutocomplete]="auto">
-          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="terms">
-              {{option}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-        <td><mat-form-field class="full-width">
-          <mat-label>Color</mat-label>
-          <input matInput>
-        </mat-form-field></td>
-      </tr>
-      </table>
-      <table class="full-width" cellspacing="0"><tr>
-          <td><mat-form-field class="full-width">
-            <mat-label>First name</mat-label>
-            <input matInput type="date">
-          </mat-form-field></td>
-          <td><mat-form-field class="example-full-width">
-            <mat-label>Long Last Name That Will Be Truncated</mat-label>
-            <input matInput type="date">
-          </mat-form-field></td>
+          <td>
+            <mat-form-field class="full-width">
+              <input type="text" placeholder="Start typing at least 2 characters..." matInput 
+                formControlName="term" [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="terms">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="full-width">
+              <mat-label>Color</mat-label>
+              <input formControlName="color" matInput>
+            </mat-form-field>
+          </td>
         </tr>
       </table>
-    </form>
-    <mat-card-actions>
-      <button mat-raised-button color="primary">Search</button>
-    </mat-card-actions>
-  </mat-card> 
+      <table class="full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="full-width">
+              <mat-label>Date From</mat-label>
+              <input matInput type="date" formControlName="dateFrom">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="full-width">
+              <mat-label>Date To</mat-label>
+              <input matInput type="date" formControlName="dateTo">
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+      <table class="full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="full-width">
+              <mat-label>Price From</mat-label>
+              <input matInput type="number" formControlName="priceFrom">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="full-width">
+              <mat-label>Price To</mat-label>
+              <input matInput type="number" formControlName="priceTo">
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+      <mat-card-actions>
+        <button type="submit" mat-raised-button color="primary">Search</button>
+        <button type="button" mat-raised-button color="warn" (click)="onFormReset()">Reset</button>
+      </mat-card-actions>
+    </mat-card> 
+  </form>
   <mat-card class="card">
     <mat-table #table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">
