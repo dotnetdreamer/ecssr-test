@@ -1,4 +1,6 @@
 # ECSSR Product Listing Demo
+
+## Check List
 - [x] Product Table
 - [ ] Product has 4 images
 - [ ] Seed data to table minimum 10,000 records
