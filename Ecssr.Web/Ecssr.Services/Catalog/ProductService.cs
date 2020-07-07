@@ -1,4 +1,5 @@
-﻿using Ecssr.Core.Domain;
+﻿using Ecssr.Core;
+using Ecssr.Core.Domain;
 using Ecssr.Data;
 using Microsoft.EntityFrameworkCore;
 using Nest;
@@ -21,14 +22,14 @@ namespace Ecssr.Services.Catalog
             _ecssrDbContext = ecssrDbContext;
         }
 
-        public async Task<IEnumerable<Product>> GetProductList(int pageIndex = 1, int skip = 0)
+        public IPagedList<Product> GetProductList(int pageIndex = 0, int pageSize = int.MaxValue)
         {
-            var products = await _ecssrDbContext.Products
-                .Skip(skip)
-                .Take(pageIndex - 1)
-                .ToListAsync();
+            var query = _ecssrDbContext.Products.AsNoTracking();
+            query = query.OrderByDescending(b => b.UpdatedOn ?? b.CreatedOn);
 
-            return products;
+
+            //paging
+            return new PagedList<Product>(query, pageIndex, pageSize);
         }
 
         public async Task<Product> GetProductById(int id)

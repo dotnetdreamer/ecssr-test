@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ecssr.Web.Models
+namespace Ecssr.Api.Dto
 {
-    public class ProductViewModel
+    public class ProductDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -16,6 +16,5 @@ namespace Ecssr.Web.Models
         public string VideoUrl { get; set; }
         public string CompanyName { get; set; }
         public string Category { get; set; }
-
     }
 }

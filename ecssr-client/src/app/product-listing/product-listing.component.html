@@ -15,8 +15,7 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
   </div>
-  <mat-paginator [length]="totalCount"
-    [pageSize]="paginationService.pageSize"
+  <mat-paginator [pageSize]="paginationService.pageSize"
     [pageSizeOptions]="paginationService.selectItemsPerPage" 
-    (page)="onPageSwitch($event)">
+    (page)="onPaginatorChanged($event)">
   </mat-paginator>

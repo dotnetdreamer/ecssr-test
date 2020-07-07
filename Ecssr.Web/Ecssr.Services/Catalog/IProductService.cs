@@ -1,4 +1,5 @@
-﻿using Ecssr.Core.Domain;
+﻿using Ecssr.Core;
+using Ecssr.Core.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace Ecssr.Services.Catalog
     {
         Task DeleteAsync(Product product);
         Task<Product> GetProductById(int id);
-        Task<IEnumerable<Product>> GetProductList(int pageIndex = 1, int skip = 0);
+        IPagedList<Product> GetProductList(int pageIndex = 0, int pageSize = int.MaxValue);
         Task AddManyAsync(Product[] products);
         Task AddAsync(Product product);
     }

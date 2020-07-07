@@ -1,5 +1,6 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 import { PaginationService } from '../shared/pagination.service';
 import { IProduct } from './product.model';
@@ -10,27 +11,37 @@ import { ProductService } from './product.service';
   templateUrl: './product-listing.component.html',
   styleUrls: ['./product-listing.component.scss']
 })
-export class ProductListingComponent implements OnInit {
+export class ProductListingComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   dataSource = new MatTableDataSource<IProduct>();
   displayedColumns = ['id', 'name'];
-  
 
-  totalCount: number = 0;  
   constructor(public paginationService: PaginationService
     , private productSvc: ProductService) { 
 
   }
 
-  async ngOnInit() {
+  ngOnInit() {
+  }
+
+  async ngAfterViewInit() {
+    this.paginator.pageIndex = 0;
+
     await this._getProductList();
   }
 
-  onPageSwitch(ev) {
-    console.log('ev', ev);
+  async onPaginatorChanged(ev) {
+    await this._getProductList();
   }
 
   private async _getProductList() {
-    const products = await this.productSvc.getProductList();
-    this.dataSource = new MatTableDataSource<IProduct>(products);
+    const result = await this.productSvc.getProductList({
+      pageIndex: this.paginator.pageIndex || 0,
+      pageSize: this.paginator.pageSize || 5
+    });
+
+    this.dataSource.data = result.data;
+    this.paginator.length = result.total;
   }
 }

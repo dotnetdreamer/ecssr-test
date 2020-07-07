@@ -63,9 +63,9 @@ namespace Ecssr.Web.Controllers
                         Category = $"Category 1",
                         CompanyName = $"Company 1",
                         Color = "Red",
-                        Description = "Description goes here for product {i]",
+                        Description = $"Description goes here for product {i}",
                         Model = "Model Name",
-                        Price = i,
+                        Price = i * 1.5,
                         VideoUrl = "",
                     };
 
