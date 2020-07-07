@@ -14,5 +14,8 @@
 - [x] AutoMapper
 - [x] Dto/ViewModel
 
+## Setup
+- (Download)[https://www.telerik.com/account/product-download?product=REPORTING] Telerik Reporting and install trial version 
+- (Download)[https://www.elastic.co/downloads/elasticsearch] Elastic Search and run elasticsearch.bat file
 
 
