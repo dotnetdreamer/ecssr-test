@@ -51,22 +51,30 @@ namespace Ecssr.Web.Controllers
             var products = await _ecssrDbContext.Products.CountAsync();
             if (products == 0)
             {
-                var productsToAdd = new List<Product>();
+                var productNames = new List<string>()
+                {
+                    "Build your own computer",
+                    "Digital Storm VANQUISH 3 Custom Performance PC", "Apple MacBook Pro 13-inch",
+                    "Asus N551JK-XO076H Laptop", "Samsung Series 9 NP900X4C Premium Ultrabook",
+                }.ToArray();
+                var categoryNames = new List<string> { "Notebooks", "Laptops", "Desktops", "Mobiles","Cameras" }.ToArray();
 
+                var productsToAdd = new List<Product>();
                 //seed data
                 const int RECORDS_TO_INSERT = 200;
                 for (int i = 0; i < RECORDS_TO_INSERT; i++)
                 {
+                    var productRand = new Random().Next(0, 4);
                     var model = new ProductViewModel
                     {
-                        Name = $"Product - {i}",
-                        Category = $"Category 1",
+                        Name = $"{productNames[productRand]}",
+                        Category = $"{categoryNames[productRand]}",
                         CompanyName = $"Company 1",
                         Color = "Red",
                         Description = $"Description goes here for product {i}",
-                        Model = "Model Name",
+                        Model = $"Model Name for {i}",
                         Price = i * 2,
-                        VideoUrl = "",
+                        VideoUrl = ""
                     };
 
                     var product = _mapper.Map<Product>(model);

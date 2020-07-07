@@ -1,26 +1,70 @@
-<p>product-listing works!</p>
-
+<!-- 
+<mat-card class="card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>Shiba Inu</mat-card-title>
+    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+  <mat-card-content>
+    <p>
+      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+      bred for hunting.
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions>
+</mat-card> -->
 
 <div class="container mat-elevation-z8">
-  <form class="form">
-    <mat-form-field class="example-full-width">
-      <input type="text" placeholder="Start typing..." matInput 
-      [formControl]="termControl" [matAutocomplete]="auto">
-      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="terms">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </form>
-  <mat-table #table [dataSource]="dataSource" matSort>
+  <mat-card class="card">
+    <form class="form">
+      <table class="full-width" cellspacing="0"><tr>
+        <mat-form-field class="full-width">
+          <input type="text" placeholder="Start typing at least 2 characters..." matInput 
+          [formControl]="termControl" [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="terms">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <td><mat-form-field class="full-width">
+          <mat-label>Color</mat-label>
+          <input matInput>
+        </mat-form-field></td>
+      </tr>
+      </table>
+      <table class="full-width" cellspacing="0"><tr>
+          <td><mat-form-field class="full-width">
+            <mat-label>First name</mat-label>
+            <input matInput type="date">
+          </mat-form-field></td>
+          <td><mat-form-field class="example-full-width">
+            <mat-label>Long Last Name That Will Be Truncated</mat-label>
+            <input matInput type="date">
+          </mat-form-field></td>
+        </tr>
+      </table>
+    </form>
+  </mat-card> 
+  <mat-card class="card">
+    <mat-table #table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Id.</mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="pictures">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Picture(s)</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.pictures[0].imageUrl | fullPath}} </mat-cell>
+        <mat-cell *matCellDef="let element">
+          <picture>
+            <source media='(min-width:0px)' [srcset]="element.pictures[0].imageUrl | fullPath">
+            <img mat-card-image src="" alt="Photo of a {{element.name}}">
+          </picture>
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
@@ -29,8 +73,9 @@
       <mat-header-row *matHeaderRowDef="allColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: allColumns;"></mat-row>
     </mat-table>
-  </div>
-  <mat-paginator [pageSize]="paginationService.pageSize"
-    [pageSizeOptions]="paginationService.selectItemsPerPage" 
-    (page)="onPaginatorChanged($event)">
-  </mat-paginator>
+    </div>
+    <mat-paginator [pageSize]="paginationService.pageSize"
+      [pageSizeOptions]="paginationService.selectItemsPerPage" 
+      (page)="onPaginatorChanged($event)">
+    </mat-paginator>
+</mat-card> 

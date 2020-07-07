@@ -22,13 +22,33 @@ namespace Ecssr.Services.Catalog
             _ecssrDbContext = ecssrDbContext;
         }
 
-        public IPagedList<Product> GetProductList(int pageIndex = 0, int pageSize = int.MaxValue)
+        public IPagedList<Product> GetProductList(string term = ""
+            , string color = "", DateTime? fromDate = null, DateTime? toDate = null
+            , decimal? priceFrom = null, decimal? priceTo = null
+            , int pageIndex = 0, int pageSize = int.MaxValue)
         {
-            var query = _ecssrDbContext.Products
-                .Include(p => p.ProductPictures)
-                .AsNoTracking();
-            query = query.OrderByDescending(b => b.UpdatedOn ?? b.CreatedOn);
+            IQueryable<Product> query = _ecssrDbContext.Products
+                .Include(p => p.ProductPictures);
 
+            if (!string.IsNullOrEmpty(term))
+                query = query.Where(p => p.Name.Contains(term, StringComparison.OrdinalIgnoreCase));
+
+            if (!string.IsNullOrEmpty(color))
+                query = query.Where(p => p.Color.Contains(color, StringComparison.OrdinalIgnoreCase));
+
+            if (priceFrom != null)
+                query = query.Where(p => p.Price >= priceFrom);
+
+            if (priceTo != null)
+                query = query.Where(p => p.Price <= priceTo);
+
+            if (fromDate != null)
+                query = query.Where(p => p.CreatedOn >= fromDate);
+
+            if (toDate != null)
+                query = query.Where(p => p.CreatedOn <= toDate);
+
+            query = query.OrderByDescending(b => b.UpdatedOn ?? b.CreatedOn);
 
             //paging
             return new PagedList<Product>(query, pageIndex, pageSize);

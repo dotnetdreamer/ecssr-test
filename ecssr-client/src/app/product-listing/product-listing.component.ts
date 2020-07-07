@@ -60,8 +60,15 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
   }
 
   private async _filter(value: string) {
+    if(Array.isArray(value)) {
+      return;
+    }
+
     const term = value.toLowerCase();
-    console.log('filter', term);
+    if(term.length <= 2) {
+      return;
+    }
+
     const result = await this.productSvc.search(term);
     const names = result.map(p => p.name);
 
