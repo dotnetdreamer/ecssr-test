@@ -25,4 +25,13 @@ export class ProductService {
             }
         });
     }
+
+    search(term) {
+        return this.baseService.getData<IProduct[]>({ 
+            url: `${this.BASE_PRODUCT_URL}search`,
+            body: {
+                term: term,
+            }
+        });
+    }
 }

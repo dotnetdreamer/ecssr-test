@@ -18,21 +18,24 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   dataSource = new MatTableDataSource<IProduct>();
-  displayedColumns = ['id', 'name'];
-  myControl = new FormControl();
-  options: string[] = ['One', 'Two', 'Three'];
-  filteredOptions: Observable<string[]>;
+  allColumns = ['id', 'name'];
+
+  termControl = new FormControl();
+  terms: string[] = [];
+  filteredOptions: Promise<string[]>;
 
   constructor(public paginationService: PaginationService
     , private productSvc: ProductService) { 
 
   }
 
-  ngOnInit() {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+  async ngOnInit() {
+    this.termControl.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value))
-    );
+      map((value) => this._filter(value))
+    ).subscribe(async changes => {
+      this.filteredOptions = changes;
+    });
   }
 
   async ngAfterViewInit() {
@@ -55,9 +58,13 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
     this.paginator.length = result.total;
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  private async _filter(value: string) {
+    const term = value.toLowerCase();
+    console.log('filter', term);
+    const result = await this.productSvc.search(term);
+    const names = result.map(p => p.name);
 
-    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return names;
+    // return this.terms.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 }

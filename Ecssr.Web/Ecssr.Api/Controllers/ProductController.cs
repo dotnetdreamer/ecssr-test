@@ -35,6 +35,19 @@ namespace Ecssr.Api.Controllers
             return "Api is running";
         }
 
+        [HttpGet("dashboardReport")]
+        public async Task<IActionResult> DashboardReport()
+        {
+            var totalIndexed = await _elasticClient.CountAsync<Product>();
+            var totalProducts = _productService.GetProductList(pageIndex: 0, pageSize: 1).TotalCount;
+
+            return Ok(new
+            {
+                totalIndexed,
+                totalProducts
+            });
+        }
+
         [HttpGet("getProductList")]
         public IActionResult GetProductList(int pageIndex = 0, int pageSize = 5)
         {
@@ -55,12 +68,12 @@ namespace Ecssr.Api.Controllers
             return Ok(model);
         }
 
-        [HttpGet("find")]
-        public async Task<IActionResult> Find(string query, int page = 1, int pageSize = 5)
+        [HttpGet("search")]
+        public async Task<IActionResult> Search(string term, int pageIndex = 1, int pageSize = 5)
         {
             var response = await _elasticClient.SearchAsync<Product>(
-                 s => s.Query(q => q.QueryString(d => d.Query($"*{query}*")))
-                     .From((page - 1) * pageSize)
+                 s => s.Query(q => q.QueryString(d => d.Query($"*{term}*")))
+                     .From((pageIndex - 1) * pageSize)
                      .Size(pageSize));
 
             if (!response.IsValid)

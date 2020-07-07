@@ -4,14 +4,10 @@
 <div class="example-container mat-elevation-z8">
   <form class="example-form">
     <mat-form-field class="example-full-width">
-      <input type="text"
-             placeholder="Pick one"
-             aria-label="Number"
-             matInput
-             [formControl]="myControl"
-             [matAutocomplete]="auto">
+      <input type="text" placeholder="Start typing..." matInput 
+      [formControl]="termControl" [matAutocomplete]="auto">
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="terms">
           {{option}}
         </mat-option>
       </mat-autocomplete>
@@ -27,8 +23,8 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
       </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-header-row *matHeaderRowDef="allColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: allColumns;"></mat-row>
     </mat-table>
   </div>
   <mat-paginator [pageSize]="paginationService.pageSize"
