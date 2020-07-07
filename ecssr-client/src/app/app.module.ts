@@ -14,6 +14,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductListingComponent } from './product-listing/product-listing.component';
+import { PipesModule } from './pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ProductListingComponent } from './product-listing/product-listing.compo
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    PipesModule,
     BrowserAnimationsModule,
     HttpClientModule,
     MatPaginatorModule,

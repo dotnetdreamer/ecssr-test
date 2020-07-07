@@ -20,7 +20,7 @@
       </ng-container>
       <ng-container matColumnDef="pictures">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Picture(s)</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.pictures[0].imageUrl}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.pictures[0].imageUrl | fullPath}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>

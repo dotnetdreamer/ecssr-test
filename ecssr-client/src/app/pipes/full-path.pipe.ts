@@ -3,14 +3,14 @@ import { AppConstant } from '../shared/app-constant';
 
 
 @Pipe({
-  name:"fullpath"
+  name:"fullPath"
 })
 export class FullPathPipe implements PipeTransform {
     constructor() {
 
     }
 
-    transform(path: string) {
+    transform(path) {
         if(path) {
             return `${AppConstant.BASE_URL}${path}`;
         }

@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import {FormControl} from '@angular/forms';
@@ -12,7 +12,8 @@ import { ProductService } from './product.service';
 @Component({
   selector: 'app-product-listing',
   templateUrl: './product-listing.component.html',
-  styleUrls: ['./product-listing.component.scss']
+  styleUrls: ['./product-listing.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProductListingComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
