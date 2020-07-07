@@ -1,6 +1,9 @@
 import { Component, OnInit, EventEmitter, Output, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 import { PaginationService } from '../shared/pagination.service';
 import { IProduct } from './product.model';
@@ -16,6 +19,9 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
 
   dataSource = new MatTableDataSource<IProduct>();
   displayedColumns = ['id', 'name'];
+  myControl = new FormControl();
+  options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions: Observable<string[]>;
 
   constructor(public paginationService: PaginationService
     , private productSvc: ProductService) { 
@@ -23,6 +29,10 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
   }
 
   async ngAfterViewInit() {
@@ -43,5 +53,11 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
 
     this.dataSource.data = result.data;
     this.paginator.length = result.total;
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 }

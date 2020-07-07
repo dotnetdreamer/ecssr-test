@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ProductListingComponent } from './product-listing.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
  
 const routes: Routes = [
   { path: '', component: ProductListingComponent }
