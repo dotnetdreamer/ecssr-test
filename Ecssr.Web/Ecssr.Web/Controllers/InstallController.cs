@@ -54,7 +54,7 @@ namespace Ecssr.Web.Controllers
                 var productsToAdd = new List<Product>();
 
                 //seed data
-                const int RECORDS_TO_INSERT = 10;
+                const int RECORDS_TO_INSERT = 20000;
                 for (int i = 0; i < RECORDS_TO_INSERT; i++)
                 {
                     var model = new ProductViewModel
@@ -65,7 +65,7 @@ namespace Ecssr.Web.Controllers
                         Color = "Red",
                         Description = $"Description goes here for product {i}",
                         Model = "Model Name",
-                        Price = i * 1.5,
+                        Price = i * 2,
                         VideoUrl = "",
                     };
 
@@ -88,7 +88,7 @@ namespace Ecssr.Web.Controllers
             {
                 await _elasticClient.DeleteByQueryAsync<Product>(q => q.MatchAll());
 
-                var products = (await _productService.GetProductList(int.MaxValue)).ToArray();
+                var products = _productService.GetProductList().ToArray();
                 foreach (var product in products)
                 {
                     await _elasticClient.IndexDocumentAsync(product);
