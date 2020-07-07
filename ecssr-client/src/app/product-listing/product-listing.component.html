@@ -50,6 +50,9 @@
         </tr>
       </table>
     </form>
+    <mat-card-actions>
+      <button mat-raised-button color="primary">Search</button>
+    </mat-card-actions>
   </mat-card> 
   <mat-card class="card">
     <mat-table #table [dataSource]="dataSource" matSort>
@@ -73,9 +76,9 @@
       <mat-header-row *matHeaderRowDef="allColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: allColumns;"></mat-row>
     </mat-table>
-    </div>
-    <mat-paginator [pageSize]="paginationService.pageSize"
-      [pageSizeOptions]="paginationService.selectItemsPerPage" 
-      (page)="onPaginatorChanged($event)">
-    </mat-paginator>
-</mat-card> 
+  </mat-card> 
+  <mat-paginator [pageSize]="paginationService.pageSize"
+    [pageSizeOptions]="paginationService.selectItemsPerPage" 
+    (page)="onPaginatorChanged($event)">
+  </mat-paginator>
+</div>

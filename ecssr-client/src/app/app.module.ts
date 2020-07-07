@@ -8,7 +8,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
@@ -36,6 +37,7 @@ import { PipesModule } from './pipes/pipes.module';
     MatInputModule,
     MatCardModule,
     MatNativeDateModule,
+    MatButtonModule,
     ReactiveFormsModule
   ],
   providers: [
