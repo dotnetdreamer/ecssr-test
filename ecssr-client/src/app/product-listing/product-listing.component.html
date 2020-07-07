@@ -19,10 +19,11 @@
   </mat-card-actions>
 </mat-card> -->
 
-<div class="container mat-elevation-z8">
+<div class="container">
   <mat-card class="card">
-    <form class="form">
-      <table class="full-width" cellspacing="0"><tr>
+    <form class="form" [formGroup]="searchForm">
+      <table class="full-width" cellspacing="0">
+        <tr>
         <mat-form-field class="full-width">
           <input type="text" placeholder="Start typing at least 2 characters..." matInput 
           [formControl]="termControl" [matAutocomplete]="auto">

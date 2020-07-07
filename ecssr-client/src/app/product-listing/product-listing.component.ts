@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import {FormControl} from '@angular/forms';
+import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
@@ -17,6 +17,7 @@ import { ProductService } from './product.service';
 })
 export class ProductListingComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  searchForm: FormGroup;
 
   dataSource = new MatTableDataSource<IProduct>();
   allColumns = ['id', 'name', 'pictures'];
@@ -25,9 +26,18 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
   terms: string[] = [];
   filteredOptions: Promise<string[]>;
 
-  constructor(public paginationService: PaginationService
+  constructor(private formBuilder: FormBuilder
+    , public paginationService: PaginationService
     , private productSvc: ProductService) { 
-
+      //search form
+      this.searchForm = formBuilder.group({
+        term: [''],
+        color: [''],
+        dateFrom: [''],
+        dateTo: [''],
+        priceFrom: [''],
+        priceTo: ['']
+      });
   }
 
   async ngOnInit() {
