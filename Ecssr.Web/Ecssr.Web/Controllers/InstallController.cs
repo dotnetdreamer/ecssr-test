@@ -51,6 +51,9 @@ namespace Ecssr.Web.Controllers
             var products = await _ecssrDbContext.Products.CountAsync();
             if (products == 0)
             {
+                //delete existing indexes
+                await _elasticClient.DeleteByQueryAsync<Product>(q => q.MatchAll());
+
                 var productNames = new List<string>()
                 {
                     "Build your own computer",
@@ -61,7 +64,7 @@ namespace Ecssr.Web.Controllers
 
                 var productsToAdd = new List<Product>();
                 //seed data
-                const int RECORDS_TO_INSERT = 200;
+                const int RECORDS_TO_INSERT = 10000;
                 for (int i = 0; i < RECORDS_TO_INSERT; i++)
                 {
                     var productRand = new Random().Next(0, 4);

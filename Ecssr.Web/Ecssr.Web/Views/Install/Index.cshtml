@@ -9,7 +9,7 @@
 
         @if (noDbInstalled)
         {
-            <h1>Seed and install Database</h1>
+            <h1>Seed and install Database. This might take a while</h1>
             <a class="btn btn-primary" href="/install/run">Install</a>
         }
         else if (totalIndexed == 0)
@@ -22,4 +22,13 @@
             <h1>You are all set now</h1>
         }
     </div>
-
+@section Scripts {
+    <script>
+        $(function () {
+            $('a.btn').on('click', function (e) {
+                var $this = $(this);
+                $this.addClass('disabled');
+            });
+        });
+    </script>
+}
