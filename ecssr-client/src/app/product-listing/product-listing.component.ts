@@ -18,7 +18,7 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   dataSource = new MatTableDataSource<IProduct>();
-  allColumns = ['id', 'name'];
+  allColumns = ['id', 'name', 'pictures'];
 
   termControl = new FormControl();
   terms: string[] = [];

@@ -1,8 +1,8 @@
 <p>product-listing works!</p>
 
 
-<div class="example-container mat-elevation-z8">
-  <form class="example-form">
+<div class="container mat-elevation-z8">
+  <form class="form">
     <mat-form-field class="example-full-width">
       <input type="text" placeholder="Start typing..." matInput 
       [formControl]="termControl" [matAutocomplete]="auto">
@@ -13,11 +13,14 @@
       </mat-autocomplete>
     </mat-form-field>
   </form>
-  
-    <mat-table #table [dataSource]="dataSource" matSort>
+  <mat-table #table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Id.</mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="pictures">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Picture(s)</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.pictures[0].imageUrl}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>

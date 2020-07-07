@@ -8,7 +8,8 @@ namespace Ecssr.Core.Domain
     [Table("Product")]
     public class Product : BaseEntity
     {
-        //(Id, Name, color, Description, Price, Model Number, Create Date, Video, Company Name, Category).
+        private ICollection<ProductPicture> _productPictures;
+
         public string Name { get; set; }
         public string Color { get; set; }
         public string Description { get; set; }
@@ -17,5 +18,11 @@ namespace Ecssr.Core.Domain
         public string VideoUrl { get; set; }
         public string CompanyName { get; set; }
         public string Category { get; set; }
+
+        public virtual ICollection<ProductPicture> ProductPictures
+        {
+            get => _productPictures ?? (_productPictures = new List<ProductPicture>());
+            protected set => _productPictures = value;
+        }
     }
 }

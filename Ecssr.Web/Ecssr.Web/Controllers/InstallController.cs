@@ -54,7 +54,7 @@ namespace Ecssr.Web.Controllers
                 var productsToAdd = new List<Product>();
 
                 //seed data
-                const int RECORDS_TO_INSERT = 20000;
+                const int RECORDS_TO_INSERT = 200;
                 for (int i = 0; i < RECORDS_TO_INSERT; i++)
                 {
                     var model = new ProductViewModel
@@ -71,6 +71,41 @@ namespace Ecssr.Web.Controllers
 
                     var product = _mapper.Map<Product>(model);
                     product.CreatedOn = DateTime.UtcNow.AddMinutes(i);
+
+                    //picture 1
+                    var pic1 = new Random().Next(1, 5);
+                    var pic1FullPath = $"sample/{pic1}.jpeg";
+                    product.ProductPictures.Add(new ProductPicture
+                    {
+                        Product = product,
+                        ImageUrl = pic1FullPath
+                    });
+
+                    var pic2 = new Random().Next(1, 5);
+                    var pic2FullPath = $"sample/{pic2}.jpeg";
+                    product.ProductPictures.Add(new ProductPicture
+                    {
+                        Product = product,
+                        ImageUrl = pic2FullPath
+                    });
+
+
+                    var pic3 = new Random().Next(1, 5);
+                    var pic3FullPath = $"sample/{pic3}.jpeg";
+                    product.ProductPictures.Add(new ProductPicture
+                    {
+                        Product = product,
+                        ImageUrl = pic3FullPath
+                    });
+
+
+                    var pic4 = new Random().Next(1, 5);
+                    var pic4FullPath = $"sample/{pic4}.jpeg";
+                    product.ProductPictures.Add(new ProductPicture
+                    {
+                        Product = product,
+                        ImageUrl = pic4FullPath
+                    });
 
                     productsToAdd.Add(product);
                 }
@@ -103,5 +138,10 @@ namespace Ecssr.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        #region Utillities
+
+        #endregion
     }
 }

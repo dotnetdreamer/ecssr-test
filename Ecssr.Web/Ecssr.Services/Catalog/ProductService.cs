@@ -24,7 +24,9 @@ namespace Ecssr.Services.Catalog
 
         public IPagedList<Product> GetProductList(int pageIndex = 0, int pageSize = int.MaxValue)
         {
-            var query = _ecssrDbContext.Products.AsNoTracking();
+            var query = _ecssrDbContext.Products
+                .Include(p => p.ProductPictures)
+                .AsNoTracking();
             query = query.OrderByDescending(b => b.UpdatedOn ?? b.CreatedOn);
 
 

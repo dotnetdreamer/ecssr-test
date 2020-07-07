@@ -7,6 +7,11 @@ namespace Ecssr.Api.Dto
 {
     public class ProductDto
     {
+        public ProductDto()
+        {
+            this.Pictures = new List<ProductPictureDto>();
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Color { get; set; }
@@ -16,5 +21,7 @@ namespace Ecssr.Api.Dto
         public string VideoUrl { get; set; }
         public string CompanyName { get; set; }
         public string Category { get; set; }
+
+        public IList<ProductPictureDto> Pictures { get; set; }
     }
 }

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ProductListingComponent } from './product-listing.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PipesModule } from '../pipes/pipes.module';
  
 const routes: Routes = [
   { path: '', component: ProductListingComponent }
@@ -12,6 +12,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    PipesModule,
     RouterModule.forChild(routes)
   ],
   exports: [

@@ -31,7 +31,13 @@ namespace Ecssr.Web.Extensions
         {
             settings.DefaultMappingFor<Product>(m =>
                 m.Ignore(p => p.Price)
-                .Ignore(p => p.VideoUrl)
+                .Ignore(p => p.Model)
+                .Ignore(p => p.ProductPictures)
+                .Ignore(p => p.UpdatedOn)
+                .Ignore(p => p.CreatedOn)
+                .Ignore(p => p.Category)
+                .Ignore(p => p.Color)
+                .Ignore(p => p.Description)
             );
         }
 

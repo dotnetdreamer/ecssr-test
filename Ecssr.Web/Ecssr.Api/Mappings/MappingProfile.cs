@@ -4,11 +4,20 @@ using Ecssr.Core.Domain;
 
 namespace Ecssr.Web.Mappings
 {
-    public class MappingProfile: Profile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {
-            CreateMap<ProductDto, Product>().ReverseMap();
+            //product
+            CreateMap<ProductDto, Product>()
+                .ForMember(dest => dest.ProductPictures, opt => opt.Ignore());
+            CreateMap<Product, ProductDto>()
+                .ForMember(dest => dest.Pictures, opt => opt.MapFrom(p => p.ProductPictures));
+
+            //picture
+            CreateMap<ProductPicture, ProductPictureDto>()
+                .ReverseMap();
+
         }
     }
 }

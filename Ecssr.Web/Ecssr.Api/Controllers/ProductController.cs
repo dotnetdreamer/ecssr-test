@@ -8,6 +8,7 @@ using Ecssr.Core.Domain;
 using Ecssr.Services.Catalog;
 using Ecssr.Web.Framework;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Nest;
 

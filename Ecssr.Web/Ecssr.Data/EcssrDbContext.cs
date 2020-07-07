@@ -24,6 +24,10 @@ namespace Ecssr.Data
             modelBuilder.Entity<Product>()
                 .Property(a => a.Price).HasColumnType("decimal(18, 2)");
 
+            modelBuilder.Entity<Product>()
+                   .HasMany(c => c.ProductPictures)
+                   .WithOne(e => e.Product);
+
             base.OnModelCreating(modelBuilder);
         }
     }
