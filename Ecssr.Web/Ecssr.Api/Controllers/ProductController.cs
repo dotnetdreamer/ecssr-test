@@ -82,7 +82,7 @@ namespace Ecssr.Api.Controllers
         public async Task<IActionResult> Search(string term, int pageIndex = 1, int pageSize = 5)
         {
             var response = await _elasticClient.SearchAsync<Product>(
-                 s => s.Query(q => q.Term(p => p.Name, $"{term}"))
+                 s => s.Query(q => q.QueryString(d => d.Query($"*{term}*")))
                      .From((pageIndex - 1) * pageSize)
                      .Size(pageSize));
 
