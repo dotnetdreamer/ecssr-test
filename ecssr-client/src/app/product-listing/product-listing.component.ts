@@ -7,9 +7,10 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import ApexCharts from 'apexcharts/dist/apexcharts.common.js'
 
-import { PaginationService } from '../shared/pagination.service';
-import { IProduct, IReport } from './product.model';
+import { PaginationModel } from '../shared/pagination.model';
+import { IProduct, IReport, IProductPicture } from './product.model';
 import { ProductService } from './product.service';
+import { AppConstant } from '../shared/app-constant';
 
 @Component({
   selector: 'app-product-listing',
@@ -29,9 +30,9 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
 
   terms: string[] = [];
   filteredOptions: Promise<string[]>;
+  paginationModel = new PaginationModel();
 
   constructor(private formBuilder: FormBuilder
-    , public paginationService: PaginationService
     , private productSvc: ProductService) { 
       //search form
       this.searchForm = formBuilder.group({
@@ -74,6 +75,14 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
 
   async onPaginatorChanged(ev) {
     await this._getProductList();
+  }
+
+  onReportButtonClicked() {
+    window.open(AppConstant.BASE_REPORTING_URL, "_blank");
+  }
+
+  onPictureClicked(pic: IProductPicture) {
+    window.open(`${AppConstant.BASE_URL}${pic.imageUrl}`, "_blank");
   }
 
   private async _getProductList() {

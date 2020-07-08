@@ -81,7 +81,7 @@ namespace Ecssr.Web.Controllers
                     };
 
                     var product = _mapper.Map<Product>(model);
-                    product.CreatedOn = DateTime.UtcNow.AddMinutes(i);
+                    product.CreatedOn = DateTime.UtcNow.AddHours(-i);
 
                     //picture 1
                     var pic1 = new Random().Next(1, 5);

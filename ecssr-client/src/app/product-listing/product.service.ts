@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 
 import { IProduct, IReport } from './product.model';
 import { BaseService } from '../shared/base.service';
-import { IDataSourceResult } from '../shared/pagination.service';
+import { IDataSourceResult } from '../shared/pagination.model';
 
 
 @Injectable({

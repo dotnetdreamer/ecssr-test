@@ -4,6 +4,12 @@
 
   .mat-card {
     margin: 20px 0;
+
+    &.card-list {
+      .mat-card-header {
+        justify-content: flex-end;
+      }
+    }
   }
 
   .container-report {
@@ -33,3 +39,14 @@
   .mat-card-actions {
     text-align: center;
   }
+
+
+  .pictures {
+    display: flex;
+    justify-content: space-evenly;
+    
+    .w24 {
+      width: 24px;
+    }
+  }
+ 

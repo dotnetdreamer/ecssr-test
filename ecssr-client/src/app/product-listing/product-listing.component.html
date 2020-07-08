@@ -83,10 +83,6 @@
               <input matInput type="date" formControlName="dateTo">
             </mat-form-field>
           </td>
-        </tr>
-      </table>
-      <table class="full-width" cellspacing="0">
-        <tr>
           <td>
             <mat-form-field class="full-width">
               <mat-label>Price From</mat-label>
@@ -107,7 +103,10 @@
       </mat-card-actions>
     </mat-card> 
   </form>
-  <mat-card class="card">
+  <mat-card class="card card-list">
+    <mat-card-header>
+      <button mat-button (click)="onReportButtonClicked()"><mat-icon>save_all</mat-icon></button>
+    </mat-card-header>
     <mat-table #table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Id.</mat-header-cell>
@@ -115,9 +114,9 @@
       </ng-container>
       <ng-container matColumnDef="pictures">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Picture(s)</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <picture>
-            <source media='(min-width:0px)' [srcset]="element.pictures[0].imageUrl | fullPath">
+        <mat-cell class="pictures" *matCellDef="let element">
+          <picture class="w24" *ngFor="let pic of element.pictures" (click)="onPictureClicked(pic)">
+            <source media='(min-width:0px)' [srcset]="pic.imageUrl | fullPath">
             <img mat-card-image src="" alt="Photo of a {{element.name}}">
           </picture>
         </mat-cell>
@@ -130,8 +129,7 @@
       <mat-row *matRowDef="let row; columns: allColumns;"></mat-row>
     </mat-table>
   </mat-card> 
-  <mat-paginator [pageSize]="paginationService.pageSize"
-    [pageSizeOptions]="paginationService.selectItemsPerPage" 
+  <mat-paginator [pageSize]="paginationModel.pageSize" [pageSizeOptions]="paginationModel.selectItemsPerPage" 
     (page)="onPaginatorChanged($event)">
   </mat-paginator>
 </div>

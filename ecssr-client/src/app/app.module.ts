@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
@@ -19,7 +20,7 @@ import { AppComponent } from './app.component';
 import { ProductListingComponent } from './product-listing/product-listing.component';
 import { PipesModule } from './pipes/pipes.module';
 
-@NgModule({
+@NgModule({ 
   declarations: [
     AppComponent,
     ProductListingComponent
@@ -31,13 +32,14 @@ import { PipesModule } from './pipes/pipes.module';
     PipesModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatPaginatorModule,
+    MatPaginatorModule,  
     MatTableModule,
     MatAutocompleteModule,
     MatInputModule,
     MatCardModule,
     MatNativeDateModule,
     MatButtonModule,
+    MatIconModule,
     ReactiveFormsModule
   ],
   providers: [
