@@ -12,6 +12,7 @@ using AutoMapper;
 using Ecssr.Core.Domain;
 using Nest;
 using Ecssr.Services.Catalog;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Ecssr.Web.Controllers
 {
@@ -77,7 +78,7 @@ namespace Ecssr.Web.Controllers
                         Description = $"Description goes here for product {i}",
                         Model = $"Model Name for {i}",
                         Price = i * 2,
-                        VideoUrl = ""
+                        VideoUrl = $"sample/p-video.mp4"
                     };
 
                     var product = _mapper.Map<Product>(model);
@@ -134,7 +135,9 @@ namespace Ecssr.Web.Controllers
             {
                 await _elasticClient.DeleteByQueryAsync<Product>(q => q.MatchAll());
 
-                var products = _productService.GetProductList().ToArray();
+                var products = _productService.GetProductList()
+                    .DistinctBy(p => p.Name)
+                    .ToArray();
                 foreach (var product in products)
                 {
                     await _elasticClient.IndexDocumentAsync(product);

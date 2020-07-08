@@ -59,8 +59,10 @@ namespace Ecssr.Api.Controllers
             , int pageIndex = 0, int pageSize = 5)
         {
             var products = _productService.GetProductList(
-                term: term,
-                pageIndex: pageIndex, pageSize: pageSize);
+                term: term, color: color
+                , fromDate: fromDate, toDate: toDate
+                , priceFrom: priceFrom, priceTo: priceTo
+                , pageIndex: pageIndex, pageSize: pageSize);
 
             var model = new DataSourceResult
             {
@@ -80,7 +82,7 @@ namespace Ecssr.Api.Controllers
         public async Task<IActionResult> Search(string term, int pageIndex = 1, int pageSize = 5)
         {
             var response = await _elasticClient.SearchAsync<Product>(
-                 s => s.Query(q => q.QueryString(d => d.Query($"*{term}*")))
+                 s => s.Query(q => q.Term(p => p.Name, $"{term}"))
                      .From((pageIndex - 1) * pageSize)
                      .Size(pageSize));
 

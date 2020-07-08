@@ -25,8 +25,8 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
   @ViewChild('picturesContainer') picturesContainer: ElementRef;
   searchForm: FormGroup;
 
-  dataSource = new MatTableDataSource<IProduct>();
-  allColumns = ['id', 'name', 'pictures'];
+  dataSource = new MatTableDataSource<IProduct>(); 
+  allColumns = ['name', 'category', 'companyName', 'model', 'price', 'color', 'pictures', 'videoUrl'];
 
   terms: string[] = [];
   filteredOptions: Promise<string[]>;
@@ -69,8 +69,9 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
     await this._getProductList();    
   }
 
-  onFormReset() {
+  async onFormReset() {
     this.searchForm.reset();
+    await this._getProductList();    
   }
 
   async onPaginatorChanged(ev) {
@@ -83,6 +84,10 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
 
   onPictureClicked(pic: IProductPicture) {
     window.open(`${AppConstant.BASE_URL}${pic.imageUrl}`, "_blank");
+  }
+
+  onVideoClicked(url) {
+    window.open(`${AppConstant.BASE_URL}${url}`, "_blank");
   }
 
   private async _getProductList() {

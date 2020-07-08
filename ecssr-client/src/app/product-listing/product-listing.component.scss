@@ -44,9 +44,10 @@
   .pictures {
     display: flex;
     justify-content: space-evenly;
-    
+
     .w24 {
       width: 24px;
+      flex: 0;
     }
   }
  
