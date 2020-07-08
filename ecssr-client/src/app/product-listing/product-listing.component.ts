@@ -23,6 +23,8 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
   @ViewChild('indexesContainer') indexesContainer: ElementRef;
   @ViewChild('productsContainer') productsContainer: ElementRef;
   @ViewChild('picturesContainer') picturesContainer: ElementRef;
+  @ViewChild('thisWeekContainer') thisWeekContainer: ElementRef;
+  @ViewChild('categoryContainer') categoryContainer: ElementRef;
   searchForm: FormGroup;
 
   dataSource = new MatTableDataSource<IProduct>(); 
@@ -193,5 +195,55 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
       labels: ['Total Pictures']
     });
     chartPictures.render();
+
+    //weekly
+    const weeklyReport = await this.productSvc.weeklyReport();
+    const weeklyReportItems = weeklyReport.map(wr => wr.products);
+    const weeklyReportDates = weeklyReport.map(wr => wr.date);
+    
+    const optionsLineChart = {
+      chart: {
+          type: 'line',
+          width: '500px'
+      },
+      series: [{
+          name: 'Products',
+          data: weeklyReportItems
+      }],
+      xaxis: {
+        categories: weeklyReportDates
+      }
+  }
+    const chartWeekly = new ApexCharts(this.thisWeekContainer.nativeElement, optionsLineChart);
+    chartWeekly.render();
+
+    //categories
+    const catReport = await this.productSvc.categoriesReport();
+    const catReportItems = catReport.map(wr => wr.products);
+    const catReportNames = catReport.map(wr => wr.name);
+
+    const optionsCategory = {
+      legend: {
+          show: false
+      },
+      plotOptions: {
+          pie: {
+              customScale: 0.8,
+              donut: {
+                  labels: {
+                      show: true
+                  }
+              }
+          }
+      },
+      chart: {
+          type: 'donut',
+          width: '300px'
+      },
+      series: catReportItems,
+      labels: catReportNames
+  }
+    const chartCategory = new ApexCharts(this.categoryContainer.nativeElement, optionsCategory);
+    chartCategory.render();
   }
 }

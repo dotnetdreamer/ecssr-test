@@ -121,7 +121,7 @@ namespace Ecssr.Api.Controllers
             for (var i = -day; i < -day + totalDaysOfWeek; i++)
             {
                 var date = today.AddDays(i).Date;
-                var dateString = date.ToString("MMMM dd DD");
+                var dateString = date.ToString("MMMM dd");
 
                 result.Add(new
                 {

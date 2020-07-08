@@ -46,6 +46,24 @@
       </mat-card-content>
     </mat-card>
   </div>
+  <div class="container-report">
+    <mat-card class="card full-width">
+      <mat-card-header>
+        <mat-card-title>Added This Week</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div #thisWeekContainer></div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Products by Category</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div #categoryContainer></div>
+      </mat-card-content>
+    </mat-card>
+  </div>
   <form class="form" [formGroup]="searchForm" (ngSubmit)="onSearched()">
     <mat-card class="card">
       <table class="full-width" cellspacing="0">

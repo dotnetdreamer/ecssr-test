@@ -32,6 +32,20 @@ export class ProductService {
         });
     }
 
+    categoriesReport() {
+        return this.baseService.getData<{ name, products }[]>({
+            url: `${this.BASE_PRODUCT_URL}categoriesReport`
+        });
+    }
+
+    
+    weeklyReport() {
+        return this.baseService.getData<{ date, products }[]>({
+            url: `${this.BASE_PRODUCT_URL}weeklyReport`
+        });
+    }
+
+    
     dashboardReport() {
         return this.baseService.getData<IReport>({
             url: `${this.BASE_PRODUCT_URL}dashboardReport`
