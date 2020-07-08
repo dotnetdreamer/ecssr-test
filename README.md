@@ -20,6 +20,7 @@
 ## Things Considered
 - [x] Best Practices in Web and Client (Angular)
 - [x] Tier Architecture
+- [x] Material Design
 - [x] Clean Code and Re-Usable code where possible
 - [x] Easy setup and 1 click installation
 
