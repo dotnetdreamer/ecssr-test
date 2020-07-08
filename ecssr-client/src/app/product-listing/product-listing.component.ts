@@ -30,7 +30,6 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<IProduct>(); 
   allColumns = ['name', 'category', 'companyName', 'model', 'price', 'color', 'pictures', 'videoUrl'];
 
-  terms: string[] = [];
   filteredOptions: Promise<string[]>;
   paginationModel = new PaginationModel();
 
@@ -238,7 +237,7 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
       },
       chart: {
           type: 'donut',
-          width: '300px'
+          width: '400px'
       },
       series: catReportItems,
       labels: catReportNames
