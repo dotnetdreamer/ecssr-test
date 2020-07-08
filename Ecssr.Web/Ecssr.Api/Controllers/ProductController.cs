@@ -36,22 +36,6 @@ namespace Ecssr.Api.Controllers
             return "Api is running";
         }
 
-        [HttpGet("dashboardReport")]
-        public async Task<IActionResult> DashboardReport()
-        {
-            var totalIndexed = await _elasticClient.CountAsync<Product>();
-            var totalProducts = _productService.GetProductList(pageIndex: 0, pageSize: 1).TotalCount;
-            var totalPictures = await _productService.GetProductPicturesCount();
-
-            var result = new
-            {
-                totalIndexed = totalIndexed.Count,
-                totalProducts = totalProducts,
-                totalPictures = totalPictures
-            };
-            return Ok(result);
-        }
-
         [HttpGet("getProductList")]
         public IActionResult GetProductList(string term = ""
             , string color = "", DateTime? fromDate = null, DateTime? toDate = null
@@ -92,5 +76,61 @@ namespace Ecssr.Api.Controllers
             return Ok(response.Documents);
         }
 
+        [HttpGet("dashboardReport")]
+        public async Task<IActionResult> DashboardReport()
+        {
+            var totalIndexed = await _elasticClient.CountAsync<Product>();
+            var totalProducts = _productService.GetProductList(pageIndex: 0, pageSize: 1).TotalCount;
+            var totalPictures = await _productService.GetProductPicturesCount();
+
+            var result = new
+            {
+                totalIndexed = totalIndexed.Count,
+                totalProducts = totalProducts,
+                totalPictures = totalPictures
+            };
+            return Ok(result);
+        }
+
+        [HttpGet("categoriesReport")]
+        public async Task<IActionResult> GetCategoriesReport()
+        {
+            var result = new List<dynamic>();
+
+            var categories = await _productService.GetAllCategories();
+            foreach (var category in categories)
+            {
+                result.Add(new
+                {
+                    Name = category,
+                    Products = _productService.GetProductList(category: category, pageSize: 1).TotalCount
+                });
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("weeklyReport")]
+        public IActionResult GetWeeklyReport()
+        {
+            var today = DateTime.Now.Date; // This can be any date.
+            var day = (int)today.DayOfWeek; //Number of the day in week. (0 - Sunday, 1 - Monday... and so On)
+            const int totalDaysOfWeek = 7; // Number of days in a week stays constant.
+            var result = new List<dynamic>();
+
+            for (var i = -day; i < -day + totalDaysOfWeek; i++)
+            {
+                var date = today.AddDays(i).Date;
+                var dateString = date.ToString("MMMM dd DD");
+
+                result.Add(new
+                {
+                    Date = dateString,
+                    Products = _productService.GetProductList(fromDate: date, toDate: date, pageSize: 1).TotalCount
+                });
+            }
+
+            return Ok(result);
+        }
     }
 }

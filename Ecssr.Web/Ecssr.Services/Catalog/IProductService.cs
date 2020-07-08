@@ -8,17 +8,13 @@ namespace Ecssr.Services.Catalog
 {
     public interface IProductService
     {
-        Task DeleteAsync(Product product);
-        Task<Product> GetProductById(int id);
-
-        IPagedList<Product> GetProductList(string term = ""
+        IPagedList<Product> GetProductList(string term = "", string category = ""
             , string color = "", DateTime? fromDate = null, DateTime? toDate = null
             , decimal? priceFrom = null, decimal? priceTo = null
             , int pageIndex = 0, int pageSize = int.MaxValue);
 
         Task<int> GetProductPicturesCount();
 
-        Task AddManyAsync(Product[] products);
-        Task AddAsync(Product product);
+        Task<List<string>> GetAllCategories();
     }
 }
