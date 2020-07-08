@@ -98,7 +98,7 @@
         </tr>
       </table>
       <mat-card-actions>
-        <button type="submit" mat-raised-button color="primary">Search</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="!searchForm.valid">Search</button>
         <button type="button" mat-raised-button color="warn" (click)="onFormReset()">Reset</button>
       </mat-card-actions>
     </mat-card> 

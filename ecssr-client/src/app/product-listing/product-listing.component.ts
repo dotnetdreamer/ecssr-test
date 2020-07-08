@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output, Input, ViewChild,
   AfterViewInit, ViewEncapsulation, ElementRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
+import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import ApexCharts from 'apexcharts/dist/apexcharts.common.js'
@@ -36,11 +36,11 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
     , private productSvc: ProductService) { 
       //search form
       this.searchForm = formBuilder.group({
-        term: [''],
+        term: ['', Validators.minLength(3)],
         color: [''],
         dateFrom: [''],
         dateTo: [''],
-        priceFrom: [''],
+        priceFrom: ['', Validators.min(1)],
         priceTo: ['']
       });
   }
@@ -66,7 +66,10 @@ export class ProductListingComponent implements OnInit, AfterViewInit {
   }
 
   async onSearched() {
-    await this._getProductList();    
+    if(this.f.term.value || this.f.color.value || this.f.dateFrom.value
+      || this.f.dateTo.value || this.f.priceFrom.value || this.f.priceTo.value) {
+        await this._getProductList();    
+      }
   }
 
   async onFormReset() {
