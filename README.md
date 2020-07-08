@@ -1,5 +1,8 @@
 # ECSSR Product Listing Demo
 
+## Screenshots
+![Screenshot](/_docs/screenshot.png?raw=true)
+
 ## Check List
 - [x] Product Table
 - [x] Product has 4 images
