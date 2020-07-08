@@ -16,5 +16,7 @@ namespace Ecssr.Services.Catalog
         Task<int> GetProductPicturesCount();
 
         Task<List<string>> GetAllCategories();
+
+        Task AddManyAsync(Product[] products);
     }
 }

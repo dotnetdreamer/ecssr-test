@@ -1,6 +1,7 @@
 ﻿using Ecssr.Core;
 using Ecssr.Core.Domain;
 using Ecssr.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Nest;
 using System;
@@ -46,10 +47,21 @@ namespace Ecssr.Services.Catalog
                 query = query.Where(p => p.Price <= priceTo);
 
             if (fromDate != null)
-                query = query.Where(p => p.CreatedOn.Date >= fromDate.Value.Date);
+            {
+                var ids = _ecssrDbContext.Products.FromSqlRaw("select * from Product where CAST(CreatedOn AS DATE) >= CAST(@fromDate AS DATE)"
+                    , new SqlParameter("fromDate", fromDate))
+                    .Select(p => p.Id);
+                query = query.Where(p => ids.Contains(p.Id));
+            }
 
             if (toDate != null)
-                query = query.Where(p => p.CreatedOn.Date <= toDate.Value.Date);
+            {
+                var ids = _ecssrDbContext.Products.FromSqlRaw("select * from Product where CAST(CreatedOn AS DATE) <= CAST(@toDate AS DATE)"
+                    , new SqlParameter("toDate", toDate))
+                    .Select(p => p.Id);
+                query = query.Where(p => ids.Contains(p.Id));
+
+            }
 
             query = query.OrderByDescending(b => b.UpdatedOn ?? b.CreatedOn);
 
@@ -70,6 +82,23 @@ namespace Ecssr.Services.Catalog
                 .ToListAsync();
 
             return categories;
+        }
+
+        public async Task AddManyAsync(Product[] products)
+        {
+            _ecssrDbContext.AddRange(products);
+            await _ecssrDbContext.SaveChangesAsync();
+
+            var result = await _elasticClient.IndexManyAsync(products);
+            if (result.Errors)
+            {
+                // the response can be inspected for errors
+                foreach (var itemWithError in result.ItemsWithErrors)
+                {
+                    var msg = $"Failed to index document {itemWithError.Id}: {itemWithError.Error}";
+                    throw new Exception(msg);
+                }
+            }
         }
     }
 }
